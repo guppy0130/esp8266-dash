@@ -1,0 +1,25 @@
+[project]
+name = "esp8266_dash_server"
+authors = [{ name = "guppy0130", email = "guppy0130@yahoo.com" }]
+description = "Server component to aggregate data to display"
+requires-python = ">=3.7"
+dynamic = ["version", "readme"]
+dependencies = ["fastapi~=0.95.0", "hypercorn~=0.14.3", "noaa-sdk~=0.1.21"]
+
+[project.optional-dependencies]
+dev = ["flake8", "black", "build"]
+
+[project.scripts]
+server = "esp8266_dash_server.api:app"
+
+[build-system]
+requires = ["setuptools", "setuptools-scm[toml]"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+readme = { file = ["README.md"] }
+
+[tool.setuptools_scm]
+
+[tool.isort]
+profile = "black"
