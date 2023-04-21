@@ -4,10 +4,15 @@ authors = [{ name = "guppy0130", email = "guppy0130@yahoo.com" }]
 description = "Server component to aggregate data to display"
 requires-python = ">=3.7"
 dynamic = ["version", "readme"]
-dependencies = ["fastapi~=0.95.0", "hypercorn~=0.14.3", "noaa-sdk~=0.1.21"]
+dependencies = [
+  "fastapi~=0.95.0",
+  "hypercorn~=0.14.3",
+  "noaa-sdk~=0.1.21",
+  "seaborn~=0.12.2",
+]
 
 [project.optional-dependencies]
-dev = ["flake8", "black", "build"]
+dev = ["flake8", "black", "build", "isort"]
 
 [project.scripts]
 server = "esp8266_dash_server.api:app"
@@ -17,9 +22,12 @@ requires = ["setuptools", "setuptools-scm[toml]"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.dynamic]
-readme = { file = ["README.md"] }
+readme = { file = ["README.md"], "content-type" = "text/markdown" }
 
 [tool.setuptools_scm]
 
 [tool.isort]
 profile = "black"
+
+[tool.black]
+line-length = 79
