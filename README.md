@@ -43,5 +43,6 @@ hypercorn api:app --bind 0.0.0.0:8000 --reload
 ### Containerize
 
 ```bash
-docker build -f Containerfile -t esp8266-dash-server:latest .
+docker buildx create --use
+docker buildx build --platform=linux/amd64,linux/arm64 -f Containerfile -t guppy0130/esp8266-dash-server:latest -t guppy0130/esp8266-dash-server:v0.1.0 --push  .
 ```
