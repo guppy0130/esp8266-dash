@@ -7,12 +7,12 @@ from typing import List
 import seaborn
 from fastapi import FastAPI, Response
 from fastapi.responses import PlainTextResponse
+from matplotlib import pyplot
 from matplotlib.axes import Axes
 from matplotlib.dates import DateFormatter
-from matplotlib import pyplot
 from noaa_sdk import NOAA
-from pydantic import parse_obj_as
 from PIL import Image
+from pydantic import parse_obj_as
 
 from weather_models import NOAAForecastModel
 

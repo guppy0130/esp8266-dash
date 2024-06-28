@@ -5,17 +5,14 @@ description = "Server component to aggregate data to display"
 requires-python = ">=3.7"
 dynamic = ["version", "readme"]
 dependencies = [
-  "fastapi~=0.95.0",
-  "hypercorn~=0.14.3",
+  "fastapi~=0.111.0",
+  "hypercorn~=0.17.3",
   "noaa-sdk~=0.1.21",
-  "seaborn~=0.12.2",
+  "seaborn~=0.13.2",
 ]
 
 [project.optional-dependencies]
 dev = ["flake8", "black", "build", "isort"]
-
-[project.scripts]
-server = "esp8266_dash_server.api:app"
 
 [build-system]
 requires = ["setuptools", "setuptools-scm[toml]"]

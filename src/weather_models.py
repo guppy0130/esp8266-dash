@@ -1,8 +1,10 @@
 from datetime import datetime
 from enum import Enum
 from typing import Any, Optional
+from urllib.parse import urlunsplit
 
-from pydantic import BaseModel, HttpUrl
+from noaa_sdk.noaa import NOAA
+from pydantic import BaseModel, HttpUrl, validator
 
 from utils import pascal_generator
 
@@ -69,6 +71,14 @@ class NOAAForecastModel(BaseModel):
     icon: HttpUrl
     short_forecast: str
     detailed_forecast: str
+
+    @validator("icon", pre=True, always=True)
+    def validate_icon(cls, v: Any):
+        if not isinstance(v, str):
+            raise TypeError(v)
+        if v.startswith("/"):
+            return urlunsplit(["https", NOAA.DEFAULT_END_POINT, v, "", ""])
+        raise ValueError(f"Unsure how to urljoin {v}")
 
     def __str__(self) -> str:
         return "\n".join(
