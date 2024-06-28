@@ -4,8 +4,6 @@
 #include <ESP8266WiFi.h>
 #include <TZ.h>
 #include <sntp.h>
-#include <locale.h>
-#include <string.h>
 #include <ESP8266HTTPClient.h>
 #include <WiFiClientSecureBearSSL.h>
 #include <ArduinoJson.h>
@@ -31,6 +29,7 @@ void setup() {
     // init e-paper display
     display.init(115200);
     // init wifi
+    WiFi.hostname("esp8266-dash-client");
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     Serial.print("Connecting to wifi");
     while (WiFi.status() != WL_CONNECTED) {
