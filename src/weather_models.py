@@ -4,7 +4,7 @@ from typing import Any, Optional
 from urllib.parse import urlunsplit
 
 from noaa_sdk.noaa import NOAA
-from pydantic import BaseModel, HttpUrl, validator
+from pydantic import BaseModel, HttpUrl, field_validator
 
 from utils import pascal_generator
 
@@ -29,7 +29,7 @@ class ValueWithUnit(BaseModel):
     """A value with some `wmoUnit`-prefixed unit from NOAA"""
 
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
         alias_generator = pascal_generator
 
     unit_code: NOAAUnitEnum
@@ -44,6 +44,12 @@ class ValueWithUnit(BaseModel):
         }
         return f"{self.value}{enum_lut[self.unit_code]}"
 
+    @field_validator("value", mode="before")
+    def truncate_to_int(cls, v) -> int:
+        if not isinstance(v, (float, int)):
+            raise TypeError(f"{v} should be float/int")
+        return int(v)
+
 
 class NOAAForecastModel(BaseModel):
     """
@@ -52,7 +58,7 @@ class NOAAForecastModel(BaseModel):
     """
 
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
         alias_generator = pascal_generator
 
     number: int
@@ -72,7 +78,7 @@ class NOAAForecastModel(BaseModel):
     short_forecast: str
     detailed_forecast: str
 
-    @validator("icon", pre=True, always=True)
+    @field_validator("icon", mode="before")
     def validate_icon(cls, v: Any):
         if not isinstance(v, str):
             raise TypeError(v)
