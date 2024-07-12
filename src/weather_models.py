@@ -84,6 +84,8 @@ class NOAAForecastModel(BaseModel):
             raise TypeError(v)
         if v.startswith("/"):
             return urlunsplit(["https", NOAA.DEFAULT_END_POINT, v, "", ""])
+        elif v.startswith("http"):
+            return v
         raise ValueError(f"Unsure how to urljoin {v}")
 
     def __str__(self) -> str:
