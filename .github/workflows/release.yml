@@ -30,7 +30,7 @@ jobs:
       - uses: "docker/metadata-action@v5"
         id: "meta"
         with:
-          images: "guppy0130/esp8266-dash"
+          images: "guppy0130/esp8266-dash-server"
           tags: |
             type=semver,pattern={{raw}}
 
@@ -47,6 +47,6 @@ jobs:
       - name: "Generate artifact attestation"
         uses: "actions/attest-build-provenance@v1"
         with:
-          subject-name: "docker.io/guppy0130/esp8266-dash"
+          subject-name: "docker.io/guppy0130/esp8266-dash-server"
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
